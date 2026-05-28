@@ -1,0 +1,170 @@
+openapi: 3.1.0
+info:
+  title: FindMesh API
+  version: 0.1.0
+  description: Privacy-preserving lost-item recovery API for mobile apps, merchant stands, admin tools, and firmware clients.
+servers:
+  - url: http://localhost:8080
+security:
+  - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+    SightingPayload:
+      type: object
+      required: [protocol_version, source_type, tag_ephemeral_id, time_bucket, rssi_bucket, nonce]
+      properties:
+        protocol_version: { type: integer, example: 1 }
+        source_type: { type: string, enum: [merchant_stand, user_app] }
+        source_id: { type: string, description: Internal stand ID for signed stand sightings. }
+        tag_ephemeral_id: { type: string, example: "00112233445566778899aabbccddeeff" }
+        zone_ephemeral_id: { type: string }
+        zone_id: { type: string }
+        time_bucket: { type: string, format: date-time }
+        rssi_bucket: { type: string, enum: [near, medium, far] }
+        nonce: { type: string }
+        signature: { type: string }
+paths:
+  /healthz:
+    get:
+      security: []
+      responses:
+        "200": { description: OK }
+  /v1/auth/otp/start:
+    post:
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [phone]
+              properties:
+                phone: { type: string }
+      responses:
+        "200": { description: OTP started }
+  /v1/auth/otp/verify:
+    post:
+      security: []
+      responses:
+        "200": { description: Session token returned }
+  /v1/me:
+    get:
+      responses:
+        "200": { description: Current user }
+    delete:
+      responses:
+        "200": { description: Account deleted }
+  /v1/tags:
+    get:
+      responses:
+        "200": { description: User tags }
+  /v1/tags/pair/start:
+    post:
+      responses:
+        "200": { description: Pairing challenge }
+  /v1/tags/pair/complete:
+    post:
+      responses:
+        "200": { description: Paired tag and owner configuration }
+  /v1/tags/{tag_id}/lost-mode:
+    post:
+      parameters:
+        - name: tag_id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { description: Lost mode session }
+  /v1/tags/{tag_id}/last-seen:
+    get:
+      parameters:
+        - name: tag_id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { description: Coarse last-seen summary }
+  /v1/sightings:
+    post:
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/SightingPayload' }
+      responses:
+        "202": { description: Accepted }
+  /v1/sightings/batch:
+    post:
+      security: []
+      responses:
+        "202": { description: Batch accepted with per-item errors }
+  /v1/merchants:
+    post:
+      responses:
+        "201": { description: Merchant and coarse zone created }
+  /v1/stands/claim/start:
+    post:
+      responses:
+        "200": { description: Claim token }
+  /v1/stands/claim/complete:
+    post:
+      responses:
+        "200": { description: Stand bound to merchant zone }
+  /v1/recovery/requests:
+    get:
+      responses:
+        "200": { description: Recovery requests }
+    post:
+      responses:
+        "201": { description: Recovery request }
+  /v1/found/{public_lost_token}:
+    get:
+      security: []
+      parameters:
+        - name: public_lost_token
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { description: Safe found-item page data }
+  /v1/abuse/reports:
+    post:
+      responses:
+        "201": { description: Abuse report }
+  /v1/admin/users:
+    get:
+      responses:
+        "200": { description: Admin users list, audited }
+  /v1/admin/tags:
+    get:
+      responses:
+        "200": { description: Admin tags list, audited }
+  /v1/admin/stands:
+    get:
+      responses:
+        "200": { description: Admin stands list, audited }
+  /v1/admin/sightings:
+    get:
+      responses:
+        "200": { description: Admin sightings list, audited }
+  /v1/firmware/{device_type}/manifest:
+    get:
+      security: []
+      parameters:
+        - name: device_type
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { description: Firmware manifest }

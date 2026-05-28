@@ -1,0 +1,23 @@
+.env
+.DS_Store
+
+# Go
+bin/
+coverage.out
+
+# Node
+node_modules/
+dist/
+
+# Flutter
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+
+# ESP-IDF
+firmware/**/build/
+firmware/**/managed_components/
+
+# Local caches
+*.log

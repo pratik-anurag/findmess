@@ -1,0 +1,28 @@
+name: findmesh_app
+description: FindMesh mobile app for private lost-item recovery.
+publish_to: "none"
+version: 0.1.0+1
+
+environment:
+  sdk: ">=3.5.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_ble_peripheral: ^2.1.0
+  flutter_blue_plus: ^2.3.3
+  flutter_riverpod: ^2.5.1
+  flutter_secure_storage: ^9.2.2
+  http: ^1.2.2
+  nfc_manager: ^3.5.1
+  permission_handler: ^12.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true

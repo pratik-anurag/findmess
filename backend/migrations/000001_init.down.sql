@@ -1,0 +1,16 @@
+DROP TABLE IF EXISTS device_heartbeats;
+DROP TABLE IF EXISTS firmware_releases;
+DROP TABLE IF EXISTS audit_events;
+DROP TABLE IF EXISTS abuse_reports;
+DROP TABLE IF EXISTS recovery_requests;
+DROP TABLE IF EXISTS last_seen_summaries;
+DROP TABLE IF EXISTS lost_mode_sessions;
+DROP TABLE IF EXISTS sightings;
+DROP TABLE IF EXISTS stand_claim_tokens;
+DROP TABLE IF EXISTS stands;
+DROP TABLE IF EXISTS merchant_zones;
+DROP TABLE IF EXISTS merchants;
+DROP TABLE IF EXISTS tag_ownership_events;
+DROP TABLE IF EXISTS tags;
+DROP TABLE IF EXISTS user_devices;
+DROP TABLE IF EXISTS users;

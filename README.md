@@ -15,6 +15,8 @@ FindMesh is not people tracking, employee tracking, customer surveillance, live 
 
 ## Local Setup
 
+For a step-by-step demo timeline, use [HACKATHON_PLAN.md](./HACKATHON_PLAN.md). It explains what to run first, what terminals stay open, and when to use backend, admin, mobile, BLE, NFC, tests, and firmware commands.
+
 Prerequisites:
 
 - Go 1.23+

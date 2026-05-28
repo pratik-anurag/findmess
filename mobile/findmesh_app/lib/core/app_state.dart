@@ -14,6 +14,9 @@ import '../features/anti_stalking/anti_stalking_logic.dart';
 final apiClientProvider = Provider<ApiClient>((ref) => ApiClient());
 final secureStorageProvider = Provider<SecureStorageService>((ref) => InMemorySecureStorageService());
 const useRealRadio = bool.fromEnvironment('FINDMESH_USE_REAL_RADIO');
+const enableDevLogin = bool.fromEnvironment('FINDMESH_ENABLE_DEV_LOGIN', defaultValue: true);
+const devLoginPhone = '+15550000000';
+const devLoginOtp = '123456';
 
 final bleServiceProvider = Provider<BleService>((ref) => useRealRadio ? RealBleService() : MockBleService());
 final nfcServiceProvider = Provider<NfcService>((ref) => useRealRadio ? RealNfcService() : MockNfcService());
@@ -39,6 +42,11 @@ class SessionController extends StateNotifier<SessionState> {
     api.token = token;
     await storage.write('session_token', token);
     state = SessionState(token: token, userId: (response['user'] as Map<String, dynamic>)['id'] as String?);
+  }
+
+  Future<void> devLogin() async {
+    await startOtp(devLoginPhone);
+    await verifyOtp(devLoginPhone, devLoginOtp);
   }
 
   Future<void> logout() async {

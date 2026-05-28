@@ -57,6 +57,12 @@ flutter pub get
 flutter run --dart-define=FINDMESH_API_BASE_URL=http://localhost:8080
 ```
 
+To bypass phone entry during local demos, tap `Continue with demo login` on the login screen. It calls the local OTP endpoints with phone `+15550000000` and dev OTP `123456`, so the app still receives a normal bearer token. Disable this button with:
+
+```sh
+flutter run --dart-define=FINDMESH_API_BASE_URL=http://localhost:8080 --dart-define=FINDMESH_ENABLE_DEV_LOGIN=false
+```
+
 Hackathon BLE/NFC mode on Android:
 
 ```sh

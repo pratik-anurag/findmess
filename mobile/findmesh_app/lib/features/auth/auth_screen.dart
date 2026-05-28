@@ -48,6 +48,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               }
             },
           ),
+          if (enableDevLogin) ...[
+            const SizedBox(height: 12),
+            OutlinedButton.icon(
+              icon: const Icon(Icons.bolt_outlined),
+              label: const Text('Continue with demo login'),
+              onPressed: () async {
+                try {
+                  await ref.read(sessionProvider.notifier).devLogin();
+                } catch (e) {
+                  setState(() => error = e.toString());
+                }
+              },
+            ),
+          ],
         ],
       ),
     );

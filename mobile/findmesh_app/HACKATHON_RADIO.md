@@ -23,6 +23,8 @@ flutter pub get
 flutter run --dart-define=FINDMESH_API_BASE_URL=http://localhost:8080 --dart-define=FINDMESH_USE_REAL_RADIO=true
 ```
 
+On the login screen, tap `Continue with demo login` to skip manual phone entry. It uses the local dev OTP flow with phone `+15550000000` and OTP `123456`.
+
 If you are not using USB reverse port forwarding and the phone is on the same Wi-Fi network as your laptop, replace `localhost` with the laptop LAN IP:
 
 ```sh
